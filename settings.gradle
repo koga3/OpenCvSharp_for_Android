@@ -14,4 +14,9 @@ dependencyResolutionManagement {
 }
 rootProject.name = "OpenCvSharp"
 include ':app'
-include ':sdk'
+include ':opencv'
+//def opencvsdk='C:/Users/Shota Koga/Desktop/OpenCV-android-sdk'
+//// You can put declaration above into gradle.properties file instead (including file in HOME directory),
+//// but without 'def' and apostrophe symbols ('): opencvsdk=<path_to_opencv_android_sdk_rootdir>
+//include ':opencv'
+//project(':opencv').projectDir = new File(opencvsdk + '/sdk')

@@ -31,24 +31,31 @@ project("opencvsharp")
 # Gradle automatically packages shared libraries with your APK.
 
 # cppファイルすべて読み込む
-file(GLOB OPENCVSHARP_FILES *.cpp)
+#file(GLOB OPENCVSHARP_FILES *.cpp)
+
+# SOURCE FILES
+set(OPENCVSHARP_FILES
+        core.cpp
+        imgproc.cpp
+        utils.cpp
+        )
 
 add_library( # Sets the name of the library.
         opencvsharp
 
         # Sets the library as a shared library.
-        STATIC
+        SHARED
 
         # Provides a relative path to your source file(s).
         ${OPENCVSHARP_FILES})
 
+set(OpenCV_DIR "${CMAKE_CURRENT_LIST_DIR}/../../../../opencv/native/jni")
 # OPencvのdirを集めてくる
-set(OpenCV_DIR "${CMAKE_CURRENT_LIST_DIR}/../../../../sdk/native/jni")
-find_package(OpenCV REQUIRED)
-if(OpenCV_FOUND)
-    target_include_directories( opencvsharp PUBLIC ${OpenCV_INCLUDE_DIRS} )
-    target_link_libraries( opencvsharp ${OpenCV_LIBS} )
-endif()
+find_package(OpenCV 4.7 REQUIRED java)
+#if(OpenCV_FOUND)
+#    target_include_directories( opencvsharp PUBLIC ${OpenCV_INCLUDE_DIRS} )
+target_link_libraries(opencvsharp ${OpenCV_LIBRARIES})
+#endif()
 
 
 # Searches for a specified prebuilt library and stores the path as a
@@ -77,5 +84,17 @@ target_link_libraries( # Specifies the target library.
 
 # 静的ライブラリ 出力先を指定
 # set_target_properties( ライブラリ名 PROPERTIES ARCHIVE_OUTPUT_DIRECTORY ${OUTPUT_DIR} )
-set( OUTPUT_DIR "${CMAKE_CURRENT_LIST_DIR}/../../../build_android/${CMAKE_ANDROID_ARCH_ABI}/")
-set_target_properties( opencvsharp PROPERTIES ARCHIVE_OUTPUT_DIRECTORY ${OUTPUT_DIR} )
+#set( OUTPUT_DIR "${CMAKE_CURRENT_LIST_DIR}/../../../build_android/${CMAKE_ANDROID_ARCH_ABI}/")
+#set_target_properties( opencvsharp PROPERTIES ARCHIVE_OUTPUT_DIRECTORY ${OUTPUT_DIR} )
+
+# ライブラリプロジェクトのルート
+# ここではこのファイルから２階層上を指定
+set( LIB_ROOT ${CMAKE_CURRENT_LIST_DIR}/../../.. )
+
+# ライブラリの出力先
+# 対応するプロセッサごとにフォルダを分けて出力
+set( OUTPUT_DIR ${LIB_ROOT}/build_android/${CMAKE_ANDROID_ARCH_ABI} )
+
+# 出力先を指定（※STATICとはプロパティ名が違うので注意！）
+set_target_properties( opencvsharp
+        PROPERTIES LIBRARY_OUTPUT_DIRECTORY ${OUTPUT_DIR} )

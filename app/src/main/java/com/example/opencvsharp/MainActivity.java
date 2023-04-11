@@ -12,6 +12,7 @@ public class MainActivity extends AppCompatActivity {
     // Used to load the 'opencvsharp' library on application startup.
     static {
         System.loadLibrary("opencvsharp");
+        System.loadLibrary("opencv_java4");
     }
 
     private ActivityMainBinding binding;
