@@ -3,35 +3,12 @@
 
 # Sets the minimum version of CMake required to build the native library.
 
-cmake_minimum_required(VERSION 3.22.1)
-
-# Declares and names the project.
+cmake_minimum_required(VERSION 3.5)
 
 project("opencvsharp")
 
-## headerファイルのセット
-#set( OPENCV_INCLUDE_DIR "${PROJECT_SOURCE_DIR}/OpenCV/native/jni/include")
-#
-#add_library(
-#        lib_opencv
-#        STATIC
-#        IMPORTED
-#)
-#set( OPENCV_LIB_DIR "${PROJECT_SOURCE_DIR}/OpenCV/native/staticlibs ")
-#
-#set_target_properties(
-#        lib_opencv
-#        PROPERTIES IMPORTED_LOCATION
-#        ${OPENCV_LIB_DIR}/${CMAKE_ANDROID_ARCH_ABI}/
-#)
-
-# Creates and names a library, sets it as either STATIC
-# or SHARED, and provides the relative paths to its source code.
-# You can define multiple libraries, and CMake builds them for you.
-# Gradle automatically packages shared libraries with your APK.
-
-# cppファイルすべて読み込む
-#file(GLOB OPENCVSHARP_FILES *.cpp)
+set(CMAKE_CXX_STANDARD 11)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 # SOURCE FILES
 set(OPENCVSHARP_FILES
@@ -50,13 +27,70 @@ add_library( # Sets the name of the library.
         ${OPENCVSHARP_FILES})
 
 set(OpenCV_DIR "${CMAKE_CURRENT_LIST_DIR}/../../../../opencv/native/jni")
-# OPencvのdirを集めてくる
-find_package(OpenCV 4.7 REQUIRED java)
-#if(OpenCV_FOUND)
-#    target_include_directories( opencvsharp PUBLIC ${OpenCV_INCLUDE_DIRS} )
-target_link_libraries(opencvsharp ${OpenCV_LIBRARIES})
-#endif()
 
+
+set(OpenCV_STATIC ON)
+find_package(OpenCV REQUIRED COMPONENTS core imgproc)
+
+#add_executable(${PROJECT_NAME} main.cpp)
+
+target_link_libraries(${PROJECT_NAME} PRIVATE opencv_core opencv_imgproc)
+
+# Declares and names the project.
+
+#project("opencvsharp")
+#
+### headerファイルのセット
+##set( OPENCV_INCLUDE_DIR "${PROJECT_SOURCE_DIR}/OpenCV/native/jni/include")
+##
+##add_library(
+##        lib_opencv
+##        STATIC
+##        IMPORTED
+##)
+##set( OPENCV_LIB_DIR "${PROJECT_SOURCE_DIR}/OpenCV/native/staticlibs ")
+##
+##set_target_properties(
+##        lib_opencv
+##        PROPERTIES IMPORTED_LOCATION
+##        ${OPENCV_LIB_DIR}/${CMAKE_ANDROID_ARCH_ABI}/
+##)
+#
+## Creates and names a library, sets it as either STATIC
+## or SHARED, and provides the relative paths to its source code.
+## You can define multiple libraries, and CMake builds them for you.
+## Gradle automatically packages shared libraries with your APK.
+#
+## cppファイルすべて読み込む
+##file(GLOB OPENCVSHARP_FILES *.cpp)
+#
+## SOURCE FILES
+#set(OPENCVSHARP_FILES
+#        core.cpp
+#        imgproc.cpp
+#        utils.cpp
+#        )
+#
+#add_library( # Sets the name of the library.
+#        opencvsharp
+#
+#        # Sets the library as a shared library.
+#        SHARED
+#
+#        # Provides a relative path to your source file(s).
+#        ${OPENCVSHARP_FILES})
+#
+#set(OpenCV_DIR "${CMAKE_CURRENT_LIST_DIR}/../../../../opencv/native/jni")
+#
+#
+#
+## Opencvのdirを集めてくる
+#find_package(OpenCV 4.7 REQUIRED COMPONENTS core imgproc)
+##if(OpenCV_FOUND)
+##    target_include_directories( opencvsharp PUBLIC ${OpenCV_INCLUDE_DIRS} )
+#target_link_libraries(opencvsharp ${OpenCV_LIBRARIES})
+##endif()
+#
 
 # Searches for a specified prebuilt library and stores the path as a
 # variable. Because CMake includes system libraries in the search path by
@@ -64,23 +98,23 @@ target_link_libraries(opencvsharp ${OpenCV_LIBRARIES})
 # you want to add. CMake verifies that the library exists before
 # completing its build.
 
-find_library( # Sets the name of the path variable.
-        log-lib
-
-        # Specifies the name of the NDK library that
-        # you want CMake to locate.
-        log)
-
-# Specifies libraries CMake should link to your target library. You
-# can link multiple libraries, such as libraries you define in this
-# build script, prebuilt third-party libraries, or system libraries.
-
-target_link_libraries( # Specifies the target library.
-        opencvsharp
-
-        # Links the target library to the log library
-        # included in the NDK.
-        ${log-lib})
+#find_library( # Sets the name of the path variable.
+#        log-lib
+#
+#        # Specifies the name of the NDK library that
+#        # you want CMake to locate.
+#        log)
+#
+## Specifies libraries CMake should link to your target library. You
+## can link multiple libraries, such as libraries you define in this
+## build script, prebuilt third-party libraries, or system libraries.
+#
+#target_link_libraries( # Specifies the target library.
+#        opencvsharp
+#
+#        # Links the target library to the log library
+#        # included in the NDK.
+#        ${log-lib})
 
 # 静的ライブラリ 出力先を指定
 # set_target_properties( ライブラリ名 PROPERTIES ARCHIVE_OUTPUT_DIRECTORY ${OUTPUT_DIR} )

@@ -15,15 +15,15 @@
 #define OPENCV_TRAITS_ENABLE_DEPRECATED
 
 #include <opencv2/opencv.hpp>
-#include <opencv2/calib3d/calib3d_c.h>
+// #include <opencv2/calib3d/calib3d_c.h>
 #include <opencv2/core/core_c.h>
-#include <opencv2/highgui/highgui_c.h>
+// #include <opencv2/highgui/highgui_c.h>
 #include <opencv2/imgproc/imgproc_c.h>
 //#include <opencv2/shape.hpp>
 //#include <opencv2/superres.hpp>
 //#include <opencv2/superres/optical_flow.hpp>
-#include <opencv2/stitching.hpp>
-#include <opencv2/video.hpp>
+// #include <opencv2/stitching.hpp>
+// #include <opencv2/video.hpp>
 
 // opencv_contrib
 //#include <opencv2/aruco.hpp>
