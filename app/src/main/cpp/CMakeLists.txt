@@ -15,6 +15,7 @@ set(OPENCVSHARP_FILES
         core.cpp
         imgproc.cpp
         utils.cpp
+        native-lib.cpp
         )
 
 add_library( # Sets the name of the library.

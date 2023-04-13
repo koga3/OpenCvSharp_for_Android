@@ -3,9 +3,17 @@
 
 #include <opencv2/opencv.hpp>
 
+#define CV_EXTERN_C extern "C"
+
 #ifndef CVAPI
-#  define CVAPI(rettype) CV_EXTERN_C CV_EXPORTS rettype CV_CDECL
+#  define CVAPI(rettype) CV_EXTERN_C rettype
 #endif
+
+CVAPI(int) Sample( int n )
+{
+    return n * 2;
+}
+
 
 //CVAPI(cv::Mat*) imgproc_getGaussianKernel(int ksize, double sigma, int ktype)
 //{
